@@ -1,3 +1,4 @@
+# Author: Ashley Barstow
 
 # Run thinning Loop to 
 # Define the marker_info function
