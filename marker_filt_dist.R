@@ -7,6 +7,8 @@
 # obscure genetic signals or increase computational burdens. ###########################
 ########################################################################################
 
+# Author: Ashley Barstow
+
 #Iterate through the function several times until the number of SNPs is within 5000-10000 for QTL Mapping 
 library(vcfR)
 
