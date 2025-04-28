@@ -8,6 +8,14 @@ The study evaluates the impact of biologically informed variant filtering strate
 
 ## **Contents**
 
+### **6populations_GATK4.1.8_MergeGVCFs_thenSplit_Beagle_biallelicSNPs.pbs**
+This PBS batch script automates a variant processing pipeline on an HPC cluster for six specific sunflower populations, designed for the PBS/Torque scheduler. It assumes initial per-sample variant calling (GVCF generation) has been completed. The script orchestrates several key steps using specific software versions:
+* **GVCF Merging:** Utilizes GATK (v4.1.8.1) `GenomicsDBImport` and `GenotypeGVCFs` to combine individual sample GVCFs based on a sample map (`6populations.sample_map`) across defined genomic intervals (`.fa.bed` file). *(Note: These steps are commented out in the provided script, potentially run separately or prior)*.
+* **VCF Splitting:** Uses `bcftools` to split the merged VCF file into separate files for each of the six populations based on predefined sample lists (`*_sampleNames.txt`).
+* **Imputation:** Employs BEAGLE (v5.4, build `beagle.01Mar24.d36.jar`) to impute missing genotypes within each population's VCF.
+* **Filtering:** Filters the imputed VCFs using `bcftools` to retain only high-quality, biallelic SNPs, excluding indels.
+The script includes resource requests (`#PBS` directives), module loading, error handling, logging, and checkpointing for robust execution in the specified cluster environment. The final output is an imputed, biallelic SNP VCF file for each population, ready for downstream analyses like QTL mapping or population genetics studies.
+
 ### **CandidateGeneGetter.sh**
 This shell script extracts candidate genes from a GFF annotation file (`HAN412_Eugene_curated_v1_1.gff3`) based on genomic regions specified in the `Windows` file. For each region (defined by chromosome, start position, and end position), it identifies all genes falling entirely within that window, counts them, and outputs the region information along with a comma-separated list of gene IDs to `AshleyCandidateGenes.txt`.
 
